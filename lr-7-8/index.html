@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>{
+		function makeCanvas(x,y){
+    const canvas = document.createElement('canvas'),
+    ctx = canvas.getContext('2d');
+    canvas.setAttribute('width', x);
+    canvas.setAttribute('height', y);
+    return {canvas, ctx}
+  }
+
+    const {canvas, ctx} = makeCanvas(600, 650);
+    document.body.appendChild(canvas);
+    const boxSize = [50, 70];
+    let position = [10, 30];
+    function draw(){
+                ctx.beginPath();
+                ctx.strokeStyle = 'blue';
+                ctx.moveTo(position[0], position[1]);
+                ctx.lineTo(position[0], position[1] + boxSize[1]);
+                ctx.moveTo(position[0], position[1]);
+                ctx.lineTo(position[0] + boxSize[0]/2, position[1] + boxSize[1]/2);
+                ctx.lineTo(position[0] + boxSize[0], position[1]);
+                ctx.lineTo(position[0] + boxSize[0], position[1] + boxSize[1]);
+                ctx.fillStyle = 'blue';
+                ctx.fillRect(position[0] + boxSize[0] * 1.1 , position[1] + boxSize[1] - 5, 5, 5);
+                let curvePos = [position[0], position[1] + boxSize[1]];
+                
+                position = [position[0] + boxSize[0] + 15, position[1]];
+                ctx.moveTo(position[0], position[1]);
+                ctx.lineTo(position[0], position[1] + boxSize[1]);
+                ctx.moveTo(position[0], position[1]/2 + boxSize[1]/1.55);
+                ctx.lineTo(position[0] + boxSize[0]/1.5, position[1]/2 + boxSize[1]/1.55);
+                ctx.moveTo(position[0] + boxSize[0]/1.5, position[1]);
+                ctx.lineTo(position[0] + boxSize[0]/1.5, position[1] + boxSize[1]);
+                ctx.moveTo(position[0] + boxSize[0]/1.5, position[1] + boxSize[1] / 2);
+                ctx.fillRect(position[0] + boxSize[0]-10, position[1] + boxSize[1] - 5, 5, 5)
+                ctx.stroke();
+                ctx.closePath();
+                ctx.beginPath();
+                ctx.moveTo(curvePos[0], curvePos[1] * 1.1);
+                ctx.bezierCurveTo(curvePos[0], curvePos[1] * 1.2,
+                                  position[0] + boxSize[0]*0.01, curvePos[1] * 1.5,
+                                  position[0]+boxSize[0]*0.9, position[1]+boxSize[1]*1.1);
+                ctx.strokeStyle = 'red';
+                ctx.stroke();
+
+}
+            ctx.font = '18px sans-serif';
+                ctx.fillText('Image:', 10, 15);
+                draw();
+
+                ctx.transform(0, -0.5, 0.5, 0, 0, 0);
+                position = [-400, 10];
+                draw();
+    }
+	</script>
+</body>
+
+</html>
